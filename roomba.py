@@ -5,10 +5,6 @@ import math
 import songs
 from time import sleep
 
-# this may be different for you
-PORT = "/dev/ttyACM0"
-adapter = PyRoombaAdapter(PORT)
-
 class MyController(Controller):
 
     def play_song(self, song: songs.Song):
@@ -198,5 +194,11 @@ class MyController(Controller):
         self.mainbrush = 0
         self.brushes()
 
-controller = MyController(interface="/dev/input/js0", connecting_using_ds4drv=False)
-controller.listen(timeout=60)
+
+if __name__ == '__main__':
+    # this may be different for you
+    PORT = "/dev/ttyACM0"
+    adapter = PyRoombaAdapter(PORT)
+
+    controller = MyController(interface="/dev/input/js0", connecting_using_ds4drv=False)
+    controller.listen(timeout=60)
