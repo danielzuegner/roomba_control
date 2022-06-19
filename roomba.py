@@ -4,6 +4,7 @@ import threading
 import math
 import songs
 from time import sleep
+import argparse
 
 class MyController(Controller):
 
@@ -196,9 +197,12 @@ class MyController(Controller):
 
 
 if __name__ == '__main__':
-    # this may be different for you
-    PORT = "/dev/ttyACM0"
-    adapter = PyRoombaAdapter(PORT)
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--interface', type=str, default='/dev/ttyACM0')
+    parser.add_argument('--controller-interface', type=str, default='/dev/input/js0')
 
-    controller = MyController(interface="/dev/input/js0", connecting_using_ds4drv=False)
+    args = parser.parse_args()
+    adapter = PyRoombaAdapter(args.interface)
+
+    controller = MyController(interface=args.controller_interface, connecting_using_ds4drv=False)
     controller.listen(timeout=60)
